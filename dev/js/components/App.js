@@ -3,14 +3,11 @@
  */
 
 import React, {Component} from "react";
-import Navigation from "./Navigation";
-
-var linkNames = ["Connexion", "Inscription"];
-var pageTitle = "The Resistance Game";
+import ConnexionPage from "./connexion-page";
 
 class App extends Component {
     render() {
-        return (<Navigation navLinksNames={linkNames} title={pageTitle} />);
+        return (<ConnexionPage />);
     }
 }
 export default App;
