@@ -3,14 +3,25 @@
  */
 
 import React, {Component} from "react";
-const uuid = require("require('uuid/v4')");
+import ReactDOM from "react-dom";
+const uuid = require("uuid/v4");
 
 class TextField extends Component {
     constructor(props) {
         super(props);
+        var uid = uuid();
         this.state = {
-            id: uuid()
+            id: uid
         };
+
+        this.handleChange = this.handleChange.bind(this);
+    }
+
+    handleChange(e) {
+        //this.setState({value: e.target.value});
+        var value = {};
+        value[this.props.label + ""] = e.target.value;
+        this.props.onChangeValue(value);
     }
 
     getCssClassName() {
@@ -21,10 +32,13 @@ class TextField extends Component {
 
     render() {
         return (
-            <div class={this.getCssClassName()}>
-                <input class="mdl-textfield__input" type={(this.props.type ? this.props.type : "text")} id={this.state.id}/>
-                    <label class="mdl-textfield__label" for={this.state.id}>{this.props.label}</label>
+            <div className={this.getCssClassName()}>
+                <input className="mdl-textfield__input" type={(this.props.type ? this.props.type : "text")} id={this.state.id}
+                    onChange={this.handleChange}/>
+                    <label className="mdl-textfield__label" htmlFor={this.state.id}>{this.props.label}</label>
             </div>
         );
     }
 }
+
+export default TextField;

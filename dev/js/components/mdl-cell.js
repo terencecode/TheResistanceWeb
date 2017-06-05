@@ -6,7 +6,7 @@ import React, {Component} from "react";
 
 class Cell extends Component {
     getCssClassName() {
-        return "mdl-cell mdl-cell--" + this.props.sizeCol + "-col" + (this.props.offsetCell ? "-offset" : "");
+        return "mdl-cell mdl-cell--" + this.props.sizeCol + "-col" + (this.props.offsetCell ? "-offset" : "") + "-desktop";
     }
 
     render() {

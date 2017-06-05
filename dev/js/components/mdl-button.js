@@ -3,8 +3,15 @@
  */
 
 import React, {Component} from "react";
+import ReactDOM from "react-dom";
 
 class Button extends Component {
+    componentDidMount() {
+        ReactDOM.findDOMNode(this).addEventListener("click", () => {
+            this.props.action();
+        })
+    }
+
     getCssClassName() {
         var cName = "mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect";
         cName += (this.props.accent ?" mdl-button--accent" : " mdl-button--colored");
@@ -14,7 +21,8 @@ class Button extends Component {
 
     render() {
         return (
-            <button type={this.props.type} value={this.props.value} name={this.props.name} form={this.props.form} className={this.getCssClassName()} disabled={this.props.disabled ? this.props.disabled : false}>
+            <button type={this.props.type} value={this.props.value} name={this.props.name} form={this.props.form}
+                    className={this.getCssClassName()} disabled={this.props.disabled ? this.props.disabled : false}>
                 {this.props.text}
             </button>
         );
