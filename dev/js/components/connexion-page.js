@@ -11,7 +11,6 @@ import TextField from "./mdl-text-field";
 var pageTitle = "The Resistance Game";
 var navLinksNames = ["List the games", "Show a game", "Create a new game"];
 require("../../css/style.css");
-var $ = require("jquery");
 
 class ConnexionPage extends Component {
     constructor(props) {
@@ -61,10 +60,12 @@ class ConnexionPage extends Component {
     render() {
         return (
             <BasicPage navLinksNames={navLinksNames} title={pageTitle}>
-                <Cell sizeCol={6}>
-                    <Cell sizeCol={12} ><TextField label={"username"} floating={true} onChangeValue={this.onChangeHandler.bind(this)} /></Cell>
-                    <Cell sizeCol={12} ><TextField type={"password"} label={"password"} floating={true} onChangeValue={this.onChangeHandler.bind(this)} /></Cell>
-                    <Cell sizeCol={12} ><Button type={"submit"} text={"Login/Register"} action={this.loginRegister.bind(this)}/></Cell>
+                <Cell sizeCol={4} classNames="formLogin">
+                        <form>
+                            <Cell sizeCol={12} ><TextField label={"username"} floating={true} onChangeValue={this.onChangeHandler.bind(this)} /></Cell>
+                            <Cell sizeCol={12} ><TextField type={"password"} label={"password"} floating={true} onChangeValue={this.onChangeHandler.bind(this)} /></Cell>
+                            <Cell sizeCol={12} ><Button text={"Login/Register"} action={this.loginRegister.bind(this)}/></Cell>
+                        </form>
                 </Cell>
             </BasicPage>);
     }

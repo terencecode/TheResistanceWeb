@@ -4,10 +4,15 @@
 
 import React, {Component} from "react";
 import ConnexionPage from "./connexion-page";
+import {Route, Switch} from 'react-router-dom';
 
 class App extends Component {
     render() {
-        return (<ConnexionPage />);
+        return (
+            <Switch>
+                <Route path="/" component={ConnexionPage} />
+            </Switch>
+        );
     }
 }
 export default App;
