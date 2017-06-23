@@ -3,25 +3,16 @@
  */
 
 import React, {Component} from "react";
-import ReactDOM from "react-dom";
 const uuid = require("uuid/v4");
 
 class TextField extends Component {
     constructor(props) {
         super(props);
-        var uid = uuid();
-        this.state = {
-            id: uid
-        };
-
         this.handleChange = this.handleChange.bind(this);
     }
 
     handleChange(e) {
-        //this.setState({value: e.target.value});
-        var value = {};
-        value[this.props.label + ""] = e.target.value;
-        this.props.onChangeValue(value);
+        this.props.onChangeValue(e, this.props.label);
     }
 
     getCssClassName() {
@@ -32,10 +23,10 @@ class TextField extends Component {
 
     render() {
         return (
-            <div className={this.getCssClassName()}>
-                <input className="mdl-textfield__input" type={(this.props.type ? this.props.type : "text")} id={this.state.id}
+            <div className={this.getCssClassName() + " is-upgraded"}>
+                <input className="mdl-textfield__input" type={(this.props.type ? this.props.type : "text")} id={this.props.uid}
                     onChange={this.handleChange}/>
-                    <label className="mdl-textfield__label" htmlFor={this.state.id}>{this.props.label}</label>
+                    <label className="mdl-textfield__label" htmlFor={this.props.uid}>{this.props.label}</label>
             </div>
         );
     }
