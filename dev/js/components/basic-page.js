@@ -4,6 +4,8 @@
 
 import React, {Component} from "react";
 import Grid from "./mdl-grid";
+require("../../../src/css/lib/material.min.css");
+require("../../../src/js/lib/material.min.js");
 
 class BasicPage extends Component {
     constructor(props) {

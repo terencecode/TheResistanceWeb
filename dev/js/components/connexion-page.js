@@ -7,10 +7,14 @@ import BasicPage from "./basic-page";
 import Cell from "./mdl-cell";
 import Button from "./mdl-button";
 import TextField from "./mdl-text-field";
+import { Route, Redirect } from "react-router-dom";
 
 var pageTitle = "The Resistance Game";
 var navLinksNames = ["List the games", "Show a game", "Create a new game"];
 require("../../css/style.css");
+
+require("../../../src/css/lib/material.min.css");
+require("../../../src/js/lib/material.min.js");
 
 class ConnexionPage extends Component {
     constructor(props) {
@@ -18,17 +22,17 @@ class ConnexionPage extends Component {
         this.state = {
             "username": "",
             "password": "",
-            "integrity": true,
-            "token": ""
+            "integrity": true
         };
-
         this.setState = this.setState.bind(this);
     }
 
-    onChangeHandler(value) {
+    onChangeHandler(e, label) {
+        var value = {};
+        value[label + ""] = e.target.value;
         this.setState({integrity: false}, () => {
             this.setState(value, () => {
-                console.log("updated state " + JSON.stringify(this.state))
+                //console.log("updated state " + JSON.stringify(this.state));
                 this.setState({integrity: true});
             });
         });
@@ -39,10 +43,7 @@ class ConnexionPage extends Component {
         var reqData = {};
         reqData.login = this.state.username;
         reqData.password = this.state.password;
-        console.log(JSON.stringify(reqData));
-        /*$.post("http://www.elwinar.com:56789/login", reqData, function(data, status){
-                alert("Data: " + data + "\nStatus: " + status);
-        });*/
+        //console.log(JSON.stringify(reqData));
         fetch("http://elwinar.com:56789/login", {
             method: "POST",
             body: JSON.stringify(reqData),
@@ -50,24 +51,37 @@ class ConnexionPage extends Component {
         }).then((response) => {
             return response.json();
         }).then((data) => {
-            this.setState(data, () => {
-                console.log(JSON.stringify(this.state));
+            this.props.onChangeToken(data.token);
+            fetch("http://elwinar.com:56789/authenticate", {
+                method: "POST",
+                headers: new Headers({token: this.props.token}),
+                mode: "cors"
+            }).then((response) => {
+                return response.json();
+            }).then((data) => {
+                console.log(JSON.stringify(data));
+                if (data.authenticated === true) {
+                    this.props.history.push("create-a-game");
+                }
             });
-            //TODO: go to play a game page
         });
     }
 
     render() {
-        return (
-            <BasicPage navLinksNames={navLinksNames} title={pageTitle}>
+        return <BasicPage navLinksNames={navLinksNames} title={pageTitle}>
                 <Cell sizeCol={4} classNames="formLogin">
-                        <form>
-                            <Cell sizeCol={12} ><TextField label={"username"} floating={true} onChangeValue={this.onChangeHandler.bind(this)} /></Cell>
-                            <Cell sizeCol={12} ><TextField type={"password"} label={"password"} floating={true} onChangeValue={this.onChangeHandler.bind(this)} /></Cell>
-                            <Cell sizeCol={12} ><Button text={"Login/Register"} action={this.loginRegister.bind(this)}/></Cell>
-                        </form>
+                    <form>
+                        <Cell sizeCol={12}><TextField label={"username"} floating={true}
+                                                      onChangeValue={this.onChangeHandler.bind(this)}
+                                                      uid={"usernameConnexionPage"}/></Cell>
+                        <Cell sizeCol={12}><TextField type={"password"} label={"password"} floating={true}
+                                                      onChangeValue={this.onChangeHandler.bind(this)}
+                                                      uid={"passwordConnexionPage"}/></Cell>
+                        <Cell sizeCol={12}><Button type={"button"} text={"Login/Register"}
+                                                   action={this.loginRegister.bind(this)}/></Cell>
+                    </form>
                 </Cell>
-            </BasicPage>);
+            </BasicPage>;
     }
 }
 
