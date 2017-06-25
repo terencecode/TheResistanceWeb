@@ -3,9 +3,11 @@
  */
 
 import React, {Component} from "react";
-import Grid from "./mdl-grid";
-require("../../../src/css/lib/material.min.css");
-require("../../../src/js/lib/material.min.js");
+import { Link } from 'react-router-dom';
+
+const pageTitle = "The Resistance Game";
+const navLinksNames = ["Create a new game", "All the games", "My games" ];
+const paths = ["/create", "/games", "/my-games"];
 
 class BasicPage extends Component {
     constructor(props) {
@@ -13,30 +15,36 @@ class BasicPage extends Component {
     }
 
     renderNavLinks() {
-        return (this.props.navLinksNames.map((name, index) => {
-            return (<a key={index} className="mdl-navigation__link" href="">{name}</a>);
+        return (navLinksNames.map((name, index) => {
+            return (<Link key={index} className="mdl-navigation__link" to={paths[index]} >{name}</Link>);
         }));
+    }
+
+    componentDidMount() {
+        window.componentHandler.upgradeElements(this.component);
+    }
+
+    componentWillUnmount() {
+        window.componentHandler.downgradeElements(this.component);
     }
 
     render() {
         return (
-            <div className="mdl-layout mdl-js-layout mdl-layout--fixed-header">
-                <header className="mdl-layout__header">
+            <div ref={component => this.component = component} className="mdl-layout mdl-js-layout">
+                <header className="mdl-layout__header mdl-layout__header--scroll">
                     <div className="mdl-layout__header-row">
-                        <span className="mdl-layout-title">{this.props.title}</span>
+                        <span className="mdl-layout-title">{pageTitle}</span>
                         <div className="mdl-layout-spacer"></div>
                         <nav className="mdl-navigation mdl-layout--large-screen-only">{this.renderNavLinks()}</nav>
                     </div>
                 </header>
                 <div className="mdl-layout__drawer">
-                    <span className="mdl-layout-title">{this.props.title}</span>
+                    <span className="mdl-layout-title">{pageTitle}</span>
                     <nav className="mdl-navigation">{this.renderNavLinks()}</nav>
                 </div>
                 <main className="mdl-layout__content">
                     <div className="page-content">
-                        <Grid>
-                            {this.props.children}
-                        </Grid>
+                        {this.props.children}
                     </div>
                 </main>
             </div>);

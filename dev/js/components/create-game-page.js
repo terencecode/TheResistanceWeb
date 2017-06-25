@@ -7,13 +7,9 @@ import BasicPage from "./basic-page";
 import Cell from "./mdl-cell";
 import Button from "./mdl-button";
 import TextField from "./mdl-text-field";
+import Grid from "./mdl-grid";
 
-var pageTitle = "The Resistance Game";
-var navLinksNames = ["List the games", "Show a game", "Create a new game"];
 require("../../css/style.css");
-
-require("../../../src/css/lib/material.min.css");
-require("../../../src/js/lib/material.min.js");
 
 class CreateGamePage extends Component {
     constructor(props) {
@@ -32,7 +28,6 @@ class CreateGamePage extends Component {
         value[label + ""] = e.target.value;
         this.setState({integrity: false}, () => {
             this.setState(value, () => {
-                //console.log("updated state " + JSON.stringify(this.state));
                 this.setState({integrity: true});
             });
         });
@@ -43,9 +38,7 @@ class CreateGamePage extends Component {
         var reqData = {};
         reqData["name"] = this.state["Name of the game"];
         reqData["players"] = parseInt(this.state["Number of players"]);
-        //reqData.token = this.props.token;
         console.log(JSON.stringify(reqData));
-        console.log(this.props.token);
         fetch("http://elwinar.com:56789/game", {
             method: "POST",
             headers: new Headers({token: this.props.token}),
@@ -54,21 +47,39 @@ class CreateGamePage extends Component {
         }).then((response) => {
             return response.json();
         }).then((data) => {
-            console.log(data);
-            this.props.history.push("/play");
+            fetch("http://elwinar.com:56789/game/" + data.game + "/join", {
+                method: "POST",
+                headers: new Headers({token: this.props.token}),
+                body: JSON.stringify({"name": this.props.username}),
+                mode: "cors"
+            }).then((response) => {
+                return response.json();
+            }).then((data2) => {
+                if (data2.player) {
+                    this.props.joinHandle(data.game, data2.player, () => {
+                        this.props.history.push("/play/" + data.game);
+                        console.log("game " + data.game + " player " + data2.player);
+                    });
+                }
+                if (data2.error == "UNIQUE constraint failed: player.game_id, player.user_id") {
+                    this.props.history.push("/play/" + data.game);
+                };
+            });
         });
     }
 
     render() {
         return (
-            <BasicPage navLinksNames={navLinksNames} title={pageTitle}>
-                <Cell sizeCol={4} classNames="formCreateAGame">
-                    <form>
-                        <Cell sizeCol={12} ><TextField label={"Name of the game"} floating={true} onChangeValue={this.onChangeHandler.bind(this)} uid={"nameCreateAGamePage"}/></Cell>
-                        <Cell sizeCol={12} ><TextField type={"number"} label={"Number of players"} floating={true} onChangeValue={this.onChangeHandler.bind(this)}  uid={"playersCreateAGamePage"}/></Cell>
-                        <Cell sizeCol={12} ><Button type={"button"} text={"Play"} action={this.play.bind(this)}/></Cell>
-                    </form>
-                </Cell>
+            <BasicPage>
+                <Grid classNames="centeredPage">
+                    <Cell sizeCol={4} classNames="formCreateAGame">
+                        <form>
+                            <Cell sizeCol={12} ><TextField label={"Name of the game"} floating={true} onChangeValue={this.onChangeHandler.bind(this)} uid={"nameCreateAGamePage"}/></Cell>
+                            <Cell sizeCol={12} ><TextField type={"number"} label={"Number of players"} floating={true} onChangeValue={this.onChangeHandler.bind(this)}  uid={"playersCreateAGamePage"}/></Cell>
+                            <Cell sizeCol={12} ><Button type={"button"} text={"Create and play"} action={this.play.bind(this)}/></Cell>
+                        </form>
+                    </Cell>
+                </Grid>
             </BasicPage>);
     }
 }

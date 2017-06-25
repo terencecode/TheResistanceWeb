@@ -1,33 +1,20 @@
-![](http://i.imgur.com/DUiL9yn.png)
+# The resistance game
 
-# React/Sass/Redux Boilerplate
+The resistance web is an online board game of the resistance.
 
-Boilerplate and guide for a React/Sass/Redux build.
+# Features
 
-## Getting Started
+  - Create an account and register
+  - Create new games and play it
+  - View all the games
+  - View all your games
 
-To get started, first install all the necessary dependencies.
-```
-> npm install
-```
+### Installation
 
-Run an initial webpack build
-```
-> webpack
-```
+Dillinger requires [Node.js](https://nodejs.org/) to run.
 
-Start the development server (changes will now update live in browser)
-```
-> npm run start
-```
+Install the dependencies and devDependencies and start the server.
 
-To view your project, go to: [http://localhost:3000/](http://localhost:3000/)
-
-## Links
-
-- [Donate](https://www.patreon.com/thenewboston)
-- [thenewboston.com](https://thenewboston.com/)
-- [Facebook](https://www.facebook.com/TheNewBoston-464114846956315/)
-- [Twitter](https://twitter.com/bucky_roberts)
-- [Google+](https://plus.google.com/+BuckyRoberts)
-- [reddit](https://www.reddit.com/r/thenewboston/)
+```sh
+$ npm install
+$ npm run start

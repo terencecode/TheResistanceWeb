@@ -1,12 +1,42 @@
-.mdl-cell {
-    text-align: center;
-}
-
 .mdl-grid {
     justify-content: center;
 }
 
-.mdl-layout__content {
+.centeredPage {
     margin-top: 50vh; /* poussé de la moitié de hauteur de viewport */
     transform: translateY(-50%); /* tiré de la moitié de sa propre hauteur */
+}
+
+.mdl-cell {
+    text-align: center;
+}
+
+.gameCard{
+    width: 100%;
+    text-align: left;
+}
+.gameCard > .mdl-card__title {
+    color: #fff;
+    height: 176px;
+    background-color: #0d47a1;
+}
+
+.gameNamePlayPage {
+    display: inline-block;
+}
+
+.gameDatePlayPage {
+    position: relative;
+    left: 30%;
+}
+.playerPlayPage {
+    color: darkgray;
+}
+
+.playViewPlayPage .mdl-cell {
+    border: 1px solid;
+}
+
+.offsetCell {
+    border-width: 0px !important;
 }

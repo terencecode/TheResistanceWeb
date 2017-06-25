@@ -21,11 +21,19 @@ class TextField extends Component {
         return cName;
     }
 
+    componentDidMount() {
+        window.componentHandler.upgradeElements(this.component);
+    }
+
+    componentWillUnmount() {
+        window.componentHandler.downgradeElements(this.component);
+    }
+
     render() {
         return (
-            <div className={this.getCssClassName() + " is-upgraded"}>
+            <div className={this.getCssClassName()} ref={component => this.component = component}>
                 <input className="mdl-textfield__input" type={(this.props.type ? this.props.type : "text")} id={this.props.uid}
-                    onChange={this.handleChange}/>
+                       onChange={this.handleChange}/>
                     <label className="mdl-textfield__label" htmlFor={this.props.uid}>{this.props.label}</label>
             </div>
         );
