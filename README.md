@@ -11,7 +11,7 @@ The resistance web is an online board game of the resistance.
 
 ### Installation
 
-Dillinger requires [Node.js](https://nodejs.org/) to run.
+The resistance web requires [Node.js](https://nodejs.org/) to run.
 
 Install the dependencies and devDependencies and start the server.
 
