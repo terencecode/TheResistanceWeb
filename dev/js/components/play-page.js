@@ -49,6 +49,7 @@ class PlayPage extends Component {
         }).then((response) => {
             return response.json();
         }).then((data) => {
+            console.log(JSON.stringify(data));
             this.setState({
                 gameName: data.name,
                 playersJoinedNb: data.joined,
@@ -102,7 +103,7 @@ class PlayPage extends Component {
                     </Cell>
                     <Cell stretch={true} sizeCol={5} >
                             <h3 className="gameNamePlayPage">{this.state.gameName}</h3>
-                            <span className="gameDatePlayPage" >{this.state.gameStartDate}</span>
+                            <span className="gameDatePlayPage" >{this.state.gameCreationDate}</span>
                     </Cell>
                     <Cell stretch={true} classNames="offsetCell" sizeCol={2} offset={true} />
                     <Cell stretch={true} sizeCol={3} >
